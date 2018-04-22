@@ -1,15 +1,14 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
 import { StackNavigator } from 'react-navigation';
 import MainScreen from './MainScreen';
 import OtherScreen from './OtherScreen';
 
-export default StackNavigator(
+const App = StackNavigator(
   {
     Home: {
       screen: MainScreen,
     },
-    Details: {
+    Other: {
       screen: OtherScreen,
     },
   },
@@ -18,4 +17,4 @@ export default StackNavigator(
   },
 );
 
-AppRegistry.registerComponent('Adventure', () => MainScreen);
+AppRegistry.registerComponent('Adventure', () => App);

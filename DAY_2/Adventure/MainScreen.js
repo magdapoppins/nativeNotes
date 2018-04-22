@@ -32,6 +32,10 @@ export default class MainScreen extends Component {
     return (
       <View style={styles.container}>
           <Text>Main!</Text>
+          <Button
+          title="Take me to Other"
+          onPress={() => this.props.navigation.navigate('Other')}
+        />
       </View>
     );
   }
