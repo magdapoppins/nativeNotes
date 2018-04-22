@@ -13,7 +13,8 @@ import {
   AsyncStorage,
   Button,
   Alert,
-  FlatList
+  FlatList,
+  Animated
 } from 'react-native';
 import { getBatteryLevel } from 'react-native-device-info';
 import RNFS from 'react-native-fs';
@@ -22,11 +23,20 @@ import RNFS from 'react-native-fs';
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = {name: '', battery: '', files: []}
+    const value = new Animated.Value(0)
+    this.state = {name: '', battery: '', files: [], value: value}
   }
   
   componentDidMount(){
     
+    setInterval(() => {
+      const rand = Math.round(Math.random()*400)
+      const anim = Animated.timing(this.state.value, {
+        toValue: rand
+      })
+      anim.start()
+    }, 1000)
+
     const downloadFileOptions = {
     fromUrl: 'https://staltz.com/g.txt',          // URL to download file from
     toFile: RNFS.DocumentDirectoryPath + '/test.txt'        // supported on Android and iOS 
@@ -72,7 +82,8 @@ onPress = () => {
         <Text style={styles.welcome}>
           Welcome to Adventure!
         </Text>
-        <Button title="Click me." onPress={Alert.alert("Hi!")} />
+        <Animated.View style={[styles.square, {width: this.state.value}]} />
+        <View style={styles.square}></View>
         <FlatList 
           data={this.state.files} 
           renderItem={({ item }) => <Text>{item}</Text>} 
@@ -101,4 +112,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 20
   },
+  square: {
+    height: 80,
+    width: 80, 
+    backgroundColor: 'green'
+  }
 });
