@@ -39,6 +39,46 @@ You can also debug in the browser console: `http://localhost:8081/debugger-ui/`.
 
 Sample npm package: [react-native-fs](https://github.com/itinance/react-native-fs).
 
+### Navigation
+**react navigation** and **react native navigation**
+StackNavigator (this has a history stack)  
 
+To implement navigation, in index.js: 
+```javascript
+import { AppRegistry } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import MainScreen from './MainScreen';
+import OtherScreen from './OtherScreen';
 
+const App = StackNavigator(
+  {
+    Home: {
+      screen: MainScreen,
+    },
+    Other: {
+      screen: OtherScreen,
+    },
+  },
+  {
+    initialRouteName: 'Home',
+  },
+);
+
+AppRegistry.registerComponent('Adventure', () => App);
+```
+
+Also, your directory should have the screens as "MainScreen.js" etc... And in those screens:
+```javascript
+  static navigationOptions = {
+      title: 'Home',
+  }; 
+  ```
+  
+To actually navigate, do:
+```javascript
+<Button
+          title="Take me to Other"
+          onPress={() => this.props.navigation.navigate('Other')}
+        />
+```
 
