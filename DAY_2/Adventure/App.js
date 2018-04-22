@@ -12,7 +12,8 @@ import {
   View,
   AsyncStorage,
   Button,
-  Alert
+  Alert,
+  FlatList
 } from 'react-native';
 import { getBatteryLevel } from 'react-native-device-info';
 import RNFS from 'react-native-fs';
@@ -21,7 +22,7 @@ import RNFS from 'react-native-fs';
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = {name: '', battery: '', files: [], file: ''}
+    this.state = {name: '', battery: '', files: []}
   }
   
   componentDidMount(){
@@ -31,15 +32,17 @@ export default class App extends Component<Props> {
     toFile: RNFS.DocumentDirectoryPath + '/test.txt'        // supported on Android and iOS 
     }
 
-  RNFS.downloadFile(downloadFileOptions).promise.then(res => {
-    console.warn(res)
-  })
+    RNFS.downloadFile(downloadFileOptions).promise.then(res => {
+      console.warn(res)
+    })
   
 
   RNFS.readFile(RNFS.DocumentDirectoryPath + '/test.txt') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
   .then((result) => {
     console.warn('GOT RESULT', result);
-    this.state.file = {file: result}
+    let splitted = result.split('\n');
+    this.state.files = splitted
+    console.warn('file is now ', this.state.files)
   })
 
   AsyncStorage.getItem('myName').then(name => {
@@ -70,9 +73,10 @@ onPress = () => {
           Welcome to Adventure!
         </Text>
         <Button title="Click me." onPress={Alert.alert("Hi!")} />
-        <Text style={styles.instructions}>
-        {RNFS.DocumentDirectoryPath}
-        </Text>
+        <FlatList 
+          data={this.state.files} 
+          renderItem={({ item }) => <Text>{item}</Text>} 
+        />
       </View>
     );
   }
