@@ -15,10 +15,12 @@ import {
   Alert,
   FlatList,
   Animated,
-  TouchableOpacity
+  TouchableOpacity, 
+  Image
 } from 'react-native';
 import { getBatteryLevel } from 'react-native-device-info';
 import RNFS from 'react-native-fs';
+import {StackNavigator} from 'react-navigation';
 
 
 export default class App extends Component<Props> {
@@ -74,6 +76,7 @@ stopThis = () => {
   render() {
     return (
       <View style={styles.container}>
+        {/* <Image source={require('./assets/mandel.jpg')}/>  */}
         <Text style={styles.welcome}>
           Welcome to Adventure!
         </Text>
