@@ -14,7 +14,8 @@ import {
   Button,
   Alert,
   FlatList,
-  Animated
+  Animated,
+  TouchableOpacity
 } from 'react-native';
 import { getBatteryLevel } from 'react-native-device-info';
 import RNFS from 'react-native-fs';
@@ -23,20 +24,11 @@ import RNFS from 'react-native-fs';
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    const value = new Animated.Value(0)
+    const value = new Animated.Value(20)
     this.state = {name: '', battery: '', files: [], value: value}
   }
   
   componentDidMount(){
-    
-    setInterval(() => {
-      const rand = Math.round(Math.random()*400)
-      const anim = Animated.timing(this.state.value, {
-        toValue: rand
-      })
-      anim.start()
-    }, 1000)
-
     const downloadFileOptions = {
     fromUrl: 'https://staltz.com/g.txt',          // URL to download file from
     toFile: RNFS.DocumentDirectoryPath + '/test.txt'        // supported on Android and iOS 
@@ -67,13 +59,16 @@ export default class App extends Component<Props> {
 }
 
 onPress = () => {
-  AsyncStorage.setItem('myName', 'Clicker');
-
-  AsyncStorage.multiSet([
-    ['myName', 'Magda'],
-    ['myAge', '21'],
-    ['myFood', 'pizza']
-  ])
+    const rand = Math.round(Math.random()*400)
+    const anim = Animated.timing(this.state.value, {
+      toValue: rand
+    })
+    anim.start()
+}
+stopThis = () => { 
+  Animated.timing(this.state.value, {
+    toValue: 20
+  }).start()
 }
 
   render() {
@@ -82,8 +77,13 @@ onPress = () => {
         <Text style={styles.welcome}>
           Welcome to Adventure!
         </Text>
-        <Animated.View style={[styles.square, {width: this.state.value}]} />
-        <View style={styles.square}></View>
+        <TouchableOpacity onPressIn={this.onPress} onPressOut={this.stopThis} >
+          <Animated.View 
+          style={[styles.square, {
+            width: this.state.value, 
+            height: this.state.value,
+          }]}/>
+        </TouchableOpacity>
         <FlatList 
           data={this.state.files} 
           renderItem={({ item }) => <Text>{item}</Text>} 
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   square: {
     height: 80,
     width: 80, 
-    backgroundColor: 'green'
+    backgroundColor: 'green',
+    borderRadius: 6
   }
 });
