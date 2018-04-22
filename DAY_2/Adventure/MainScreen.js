@@ -15,11 +15,11 @@ import {
 import {StackNavigator} from 'react-navigation';
 
 
-class MainScreen extends Component {
+export default class MainScreen extends Component {
   static navigationOptions = {
       title: 'Home',
   }; 
-  
+
   constructor(props) {
     super(props);
   }
@@ -30,7 +30,7 @@ class MainScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
           <Text>Main!</Text>
       </View>
     );
