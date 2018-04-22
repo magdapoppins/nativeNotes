@@ -17,38 +17,30 @@ import {
 import { getBatteryLevel } from 'react-native-device-info';
 import RNFS from 'react-native-fs';
 
-type Props = {};
+
 export default class App extends Component<Props> {
-constructor(props) {
-  super(props);
-  this.state = {name: '', battery: '', files: []}
-}
-
-componentDidMount(){
-
-  RNFS.readDir(RNFS.MainBundlePath) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-  .then((result) => {
-    console.warn('GOT RESULT', result);
-    this.setState({files: result});
-    console.warn('FILES IS NOW ', this.state.files)
-    // stat the first file
-    return Promise.all([RNFS.stat(result[0].path), result[0].path]);
-  })
-  .then((statResult) => {
-    if (statResult[0].isFile()) {
-      // if we have a file, read it
-      return RNFS.readFile(statResult[1], 'utf8');
+  constructor(props) {
+    super(props);
+    this.state = {name: '', battery: '', files: [], file: ''}
+  }
+  
+  componentDidMount(){
+    
+    const downloadFileOptions = {
+    fromUrl: 'https://staltz.com/g.txt',          // URL to download file from
+    toFile: RNFS.DocumentDirectoryPath + '/test.txt'        // supported on Android and iOS 
     }
 
-    return 'no file';
+  RNFS.downloadFile(downloadFileOptions).promise.then(res => {
+    console.warn(res)
   })
-  .then((contents) => {
-    // log the file contents
-    console.log(contents);
+  
+
+  RNFS.readFile(RNFS.DocumentDirectoryPath + '/test.txt') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+  .then((result) => {
+    console.warn('GOT RESULT', result);
+    this.state.file = {file: result}
   })
-  .catch((err) => {
-    console.log(err.message, err.code);
-  });
 
   AsyncStorage.getItem('myName').then(name => {
     this.setState({name: name});
