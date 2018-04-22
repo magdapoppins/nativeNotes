@@ -28,12 +28,17 @@ Native and JS are communicating over the **bridge** -> as in a marionette. The b
 Then you need to link the lib. That gives:  
 
 `rnpm-install info Linking react-native-device-info ios dependency
-rnpm-install info Platform 'ios' module react-native-device-info has been successfully linked
-rnpm-install info Linking react-native-device-info android dependency
-rnpm-install info Platform 'android' module react-native-device-info has been successfully linked`
+rnpm-install info Platform 'ios' module react-native-device-info has been successfully linked`
 
 `react-native link react-native-device-info`
 
 When you add a lib with for example java, you need to recompile (`react-native run-ios`) in order to compile the java code.  
 
-DEBUGTIPS: `console.warn` instead of logging, will show up in the simulator.
+DEBUGTIPS: `console.warn` instead of logging, will show up in the simulator. Logs can be read with the command `react-native log-ios`.
+You can also debug in the browser console: `http://localhost:8081/debugger-ui/`.
+
+Sample npm package: [react-native-fs](https://github.com/itinance/react-native-fs).
+
+
+
+
