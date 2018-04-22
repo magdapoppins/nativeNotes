@@ -23,17 +23,17 @@ Native and JS are communicating over the **bridge** -> as in a marionette. The b
 
 **AsyncStorage** => you might want to use **multiGet and multiSet** instead of setting and getting one at a time. This will increase preformance since you don't need to run back and forth on the bridge.
 
-´npm install react-native-device-info´
+`npm install react-native-device-info`
 
 Then you need to link the lib. That gives:  
 
-´rnpm-install info Linking react-native-device-info ios dependency
+`rnpm-install info Linking react-native-device-info ios dependency
 rnpm-install info Platform 'ios' module react-native-device-info has been successfully linked
 rnpm-install info Linking react-native-device-info android dependency
-rnpm-install info Platform 'android' module react-native-device-info has been successfully linked´
+rnpm-install info Platform 'android' module react-native-device-info has been successfully linked`
 
-´react-native link react-native-device-info´
+`react-native link react-native-device-info`
 
-When you add a lib with for example java, you need to recompile (´react-native run-ios´) in order to compile the java code.  
+When you add a lib with for example java, you need to recompile (`react-native run-ios`) in order to compile the java code.  
 
-DEBUGTIPS: ´console.warn´ instead of logging, will show up in the simulator.
+DEBUGTIPS: `console.warn` instead of logging, will show up in the simulator.
